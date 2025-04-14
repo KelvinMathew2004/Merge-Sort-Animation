@@ -1,24 +1,24 @@
 import java.util.*;
 
-public class MergeSorter<E> implements Runnable {
+public class MergeSorter implements Runnable {
    /**
     * @param a    the array to sort
     * @param from the first index of the range to sort
     * @param to   the last index of the range to sort
     * @param comp the comparator to compare array elements
     */
-   private E[] a;
+   private Double[] a;
    private int from;
    private int to;
-   private Comparator<? super E> comp;
+   private Comparator<Double> comp;
 
    // The most complicated part of this constructor is problably the
    // Comparator<? super E> comp parameter. The ? super E means that
    // the comparator will work with generic type E but any of its parents.
    // The use follows the Java Generic PECS rule:
    // https://howtodoinjava.com/java/generics/java-generics-what-is-pecs-producer-extends-consumer-super/
-   public MergeSorter(E[] a, int from, int to,
-         Comparator<? super E> comp) {
+   public MergeSorter(Double[] a, int from, int to,
+         Comparator<Double> comp) {
       this.a = a;
       this.from = from;
       this.to = to;
@@ -29,8 +29,8 @@ public class MergeSorter<E> implements Runnable {
       mergeSort(a, from, to, comp);
    }
 
-   public <E> void mergeSort(E[] a, int from, int to,
-         Comparator<? super E> comp) {
+   public void mergeSort(Double[] a, int from, int to,
+         Comparator<Double> comp) {
       // Here's the base case which checks for the simplist case.
       // It is also the case when the recursion stops going deeper and returns.
       // In this case, we cannot divide the work further, so we return.
@@ -59,14 +59,13 @@ public class MergeSorter<E> implements Runnable {
     *             second range
     * @param comp the comparator to compare array elements
     */
-   @SuppressWarnings("unchecked")
-   public static <E> void merge(E[] givenArray,
-         int from, int mid, int to, Comparator<? super E> comp) {
+   public static void merge(Double[] givenArray,
+         int from, int mid, int to, Comparator<Double> comp) {
       // size is the size of the range of the array to be merged
       int size = to - from + 1;
 
       // Merge both halves into a temporary array b
-      Object[] tempArray = new Object[size];
+      Double[] tempArray = new Double[size];
 
       // Set i1 to be the first element to be considered in the _from_ range
       // Set i2 to be the first element to be considered in the _to_ range
@@ -107,6 +106,6 @@ public class MergeSorter<E> implements Runnable {
 
       // Copy back from the temporary array
       for (j = 0; j < size; j++)
-         givenArray[from + j] = (E) tempArray[j];
+         givenArray[from + j] = tempArray[j];
    }
 }
