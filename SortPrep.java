@@ -58,8 +58,8 @@ public class SortPrep {
          }
       };
       int mid = values.length / 2;
-      Runnable r1 = new MergeSorter<>(values, 0, mid, comp);
-      Runnable r2 = new MergeSorter<>(values, mid + 1, values.length - 1, comp);
+      Runnable r1 = new MergeSorter(values, 0, mid, comp);
+      Runnable r2 = new MergeSorter(values, mid + 1, values.length - 1, comp);
       Thread t1 = new Thread(r1, "LeftHalf");
       Thread t2 = new Thread(r2, "RightHalf");
 
