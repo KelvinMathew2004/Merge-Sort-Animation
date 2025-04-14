@@ -53,8 +53,7 @@ public class ArrayComponent extends JComponent {
     * @param sortElement1 the first element of the pair currenlty being sorted
     * @param sortElement2 the second element of the pair currenlty being sorted
     */
-   public synchronized void setValues(Double[] values,
-         Double sortElement1, Double sortElement2) {
+   public synchronized void setValues(Double[] values, Double sortElement1, Double sortElement2) {
       // Create a 'shallow' copy of the original values array.
       // The copy contains references to the same Double objects
       // as in the original array.
@@ -64,5 +63,4 @@ public class ArrayComponent extends JComponent {
       // Repaint() invokes the paintComponent() method defined above.
       repaint();
    }
-
 }
