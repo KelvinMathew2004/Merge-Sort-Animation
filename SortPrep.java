@@ -57,12 +57,12 @@ public class SortPrep {
             return (d1).compareTo(d2);
          }
       };
-      int mid = values.length / 2;
-      int quart = mid / 2;
-      Runnable r1 = new MergeSorter(values, 0, quart, comp);
-      Runnable r2 = new MergeSorter(values, quart+1, mid, comp);
-      Runnable r3 = new MergeSorter(values, mid+1, mid+quart, comp);
-      Runnable r4 = new MergeSorter(values, mid+quart + 1, values.length - 1, comp);
+      int mid = values.length / 2; // 15
+      int quart = mid / 2; // 7
+      Runnable r1 = new MergeSorter(values, 0, quart, comp); // 0 to 7 so 8 elements
+      Runnable r2 = new MergeSorter(values, quart+1, mid, comp); // 8 to 15 so 8 elements
+      Runnable r3 = new MergeSorter(values, mid+1, mid+quart, comp); // 16 to 22 so 7 elements
+      Runnable r4 = new MergeSorter(values, mid+quart + 1, values.length - 1, comp); // 23 to 29 so 7 elements
       Thread t1 = new Thread(r1, "1st Quarter");
       Thread t2 = new Thread(r2, "2nd Quarter");
       Thread t3 = new Thread(r3, "3rd Quarter");
@@ -80,9 +80,13 @@ public class SortPrep {
       } catch (InterruptedException e) {
          System.out.println("Warning: Could not join at least one thread: " + e);
       } finally {
-         MergeSorter.merge(values, 0, quart, mid, comp);
-         MergeSorter.merge(values, mid+1, mid+quart, values.length - 1, comp);
-         MergeSorter.merge(values, 0, mid, values.length - 1, comp);
+         MergeSorter.merge(values, 0, quart, mid, comp); // 0 to 7 to 15
+         panel.setValues(values, null, null);
+
+         MergeSorter.merge(values, mid+1, mid+quart, values.length - 1, comp); // 15 to 22 to 29
+         panel.setValues(values, null, null);
+
+         MergeSorter.merge(values, 0, mid, values.length - 1, comp); // 0 to 15 to 29
          // Do the final draw of the animation, making sure none of the bars
          // are marked (colored)
          panel.setValues(values, null, null);
