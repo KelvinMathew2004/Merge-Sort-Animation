@@ -39,10 +39,17 @@ public class ArrayComponent extends JComponent {
          // If either of the current bars being drawn is one
          // of the elements currently being sorted, fill the bar with
          // color rather than just draw its outlines.
-         if (valueToBeDrawn == sortElement1 || valueToBeDrawn == sortElement2)
+         if (valueToBeDrawn == sortElement1) {
+            g2.setColor(Color.GREEN);
             g2.fill(bar);
-         else
+         } else if (valueToBeDrawn == sortElement2) {
+            g2.setColor(Color.RED);
+            g2.fill(bar);
+         }
+         else {
+            g2.setColor(Color.BLACK);
             g2.draw(bar);
+         }
       }
    }
 
