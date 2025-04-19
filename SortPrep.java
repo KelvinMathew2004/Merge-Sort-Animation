@@ -58,19 +58,30 @@ public class SortPrep {
          }
       };
       int mid = values.length / 2;
-      Runnable r1 = new MergeSorter(values, 0, mid, comp);
-      Runnable r2 = new MergeSorter(values, mid + 1, values.length - 1, comp);
-      Thread t1 = new Thread(r1, "LeftHalf");
-      Thread t2 = new Thread(r2, "RightHalf");
+      int mid2 = mid / 2;
+      Runnable r1 = new MergeSorter(values, 0, mid2, comp);
+      Runnable r2 = new MergeSorter(values, mid2+1, mid, comp);
+      Runnable r3 = new MergeSorter(values, mid+1, 2*mid2, comp);
+      Runnable r4 = new MergeSorter(values, 2*mid2 + 1, values.length - 1, comp);
+      Thread t1 = new Thread(r1, "1st Quarter");
+      Thread t2 = new Thread(r2, "2nd Quarter");
+      Thread t3 = new Thread(r3, "3rd Quarter,");
+      Thread t4 = new Thread(r4, "4th Quarter");
 
       t1.start();
       t2.start();
+      t3.start();
+      t4.start();
       try {
          t1.join();
          t2.join();
+         t3.join();
+         t4.join();
       } catch (InterruptedException e) {
          System.out.println("Warning: Could not join at least one thread: " + e);
       } finally {
+         MergeSorter.merge(values, 0, mid2, mid, comp);
+         MergeSorter.merge(values, mid+1, 2*mid2, values.length - 1, comp);
          MergeSorter.merge(values, 0, mid, values.length - 1, comp);
          // Do the final draw of the animation, making sure none of the bars
          // are marked (colored)
